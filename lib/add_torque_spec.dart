@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class addTorque extends StatefulWidget {
   const addTorque({Key? key,
@@ -14,6 +18,8 @@ class addTorque extends StatefulWidget {
 }
 
 class _addTorqueState extends State<addTorque> {
+  File? image;
+
   String dropdownValueTorque = "ft-lbs";
   String dropdownValueSize = 'mm';
 
@@ -21,6 +27,24 @@ class _addTorqueState extends State<addTorque> {
   var torqueController = TextEditingController();
   var boltSizeController = TextEditingController();
   var notesController = TextEditingController();
+
+  Future pickImage(ImageSource source) async {
+    try {
+      final ldImage = await ImagePicker().pickImage(source: source);
+
+      if(ldImage == null){
+        return;
+      }
+
+      final imageDir = File(ldImage.path);
+
+      setState(() {
+        this.image = imageDir;
+      });
+    } on PlatformException catch (e) {
+      print("Failed to pick image");
+    }
+  }
 
   @override
   void dispose() {
@@ -47,21 +71,133 @@ class _addTorqueState extends State<addTorque> {
         child: Column(
           children: [
             Expanded(
+              //Add Photo Section
+
               flex: 30,
-              child: Container(
-                width: 180,
-                margin: const EdgeInsets.only(top: 20, bottom: 40),
-                color: Colors.blueGrey,
-                child: IconButton(
-                  icon: const Icon(Icons.add_a_photo_rounded),
-                  iconSize: 120,
-                  tooltip: 'Add Vehicle Photo',
-                  onPressed: () {
-
-                  },
-
-                ),
+              child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: image != null
+                          ? Image.file(
+                        image!,
+                        width: 180,
+                        height: 180,
+                        fit: BoxFit.cover,
+                      ): Image(image: NetworkImage(
+                          'https://media.istockphoto.com/vectors/transport-and-vehicle-icon-set-vector-id621474410?k=20&m=621474410&s=170667a&w=0&h=8hYTRQYwKyDXTk8mOkBd_4-uZwiu46gQ0rgbvsAtDvs='),
+                        width: 180,
+                        height: 180,
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.lightBlue
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.add_a_photo_rounded),
+                          iconSize: 20,
+                          color: Colors.white,
+                          tooltip: 'Add Vehicle Photo',
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    height: 100,
+                                    color: Colors.lightBlueAccent,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Expanded(
+                                              flex: 20,
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.only(left: 60,right: 60),
+                                                    child: ElevatedButton(
+                                                      style: const ButtonStyle(
+                                                      ),
+                                                      onPressed: () {
+                                                        pickImage(ImageSource.gallery);
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        children: const [
+                                                          Icon(Icons.photo_outlined,),
+                                                          Padding(
+                                                            padding: EdgeInsets.all(10.0),
+                                                            child: Text(
+                                                              "Pick from Gallery",
+                                                              style: TextStyle(
+                                                                  fontSize: 18
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.only(left: 60,right: 60),
+                                                    child: ElevatedButton(
+                                                      style: const ButtonStyle(
+                                                      ),
+                                                      onPressed: () {
+                                                        pickImage(ImageSource.camera);
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        children: const [
+                                                          Icon(Icons.camera_alt_outlined),
+                                                          Padding(
+                                                            padding: EdgeInsets.all(10.0),
+                                                            child: Text(
+                                                              "Take Picture",
+                                                              style: TextStyle(
+                                                                  fontSize: 18
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ]
               ),
+              // child: Container(
+              //   width: 180,
+              //   margin: const EdgeInsets.only(top: 20, bottom: 40),
+              //   color: Colors.blueGrey,
+              //   child: IconButton(
+              //     icon: const Icon(Icons.add_a_photo_rounded),
+              //     iconSize: 120,
+              //     tooltip: 'Add Vehicle Photo',
+              //     onPressed: () {
+              //
+              //     },
+              //
+              //   ),
+              // ),
             ),
             Expanded(
               flex: 60,

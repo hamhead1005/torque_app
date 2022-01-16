@@ -70,7 +70,7 @@ class _VehicleViewState extends State<VehicleViewPage> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: SizedBox(
-                    height: 500,
+                    height: 550,
                     width: 400,
                     child: Container(
                       decoration: BoxDecoration(
@@ -90,6 +90,7 @@ class _VehicleViewState extends State<VehicleViewPage> {
                               child: Column(
                                 children: [
                                   IconButton(
+                                    //icon: Image.file(File(VehicleList[index]['image'])),
                                     icon: Image.network('${VehicleList[index]['image']}'),
                                     tooltip: 'Select Vehicle',
                                     iconSize: 100,

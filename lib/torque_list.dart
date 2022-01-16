@@ -172,13 +172,10 @@ class _torqueListState extends State<torqueList> {
                                             child: Row(
                                               children: [
                                                 Container(
-                                                  child: IconButton(
-                                                    icon: Image.network(torqueList[index]['image']),
-                                                    tooltip: 'Add Bolt Photo',
-                                                    iconSize: 100,
-                                                    onPressed: () {
-
-                                                    },
+                                                  child: Image(
+                                                    image: NetworkImage(torqueList[index]['image']),
+                                                    width: 120,
+                                                    height: 120,
                                                   ),
                                                   decoration: BoxDecoration(
                                                     border: Border.all(color: Colors.black),
