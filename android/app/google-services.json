@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "582916621088",
+    "firebase_url": "https://torquedapp-default-rtdb.firebaseio.com",
+    "project_id": "torquedapp",
+    "storage_bucket": "torquedapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582916621088:android:5e783c8c9fb4f45774cd45",
+        "android_client_info": {
+          "package_name": "com.pedroza.tourqe_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582916621088-r7727rbvta5av0h5b7gq6d8hm8d6orh0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUrTr1ZLQXCaJVsTuXV1etjoGqwFlwYW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582916621088-r7727rbvta5av0h5b7gq6d8hm8d6orh0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
