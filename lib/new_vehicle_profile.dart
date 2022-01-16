@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tourqe_app/add_sections.dart';
-import 'package:tourqe_app/profile_picture.dart';
 
 class NewVehiclePage extends StatefulWidget {
   const NewVehiclePage({Key? key, required this.title}) : super(key: key);
