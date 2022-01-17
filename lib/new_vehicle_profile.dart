@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tourqe_app/add_sections.dart';
 
+
 class NewVehiclePage extends StatefulWidget {
   const NewVehiclePage({Key? key, required this.title}) : super(key: key);
 
@@ -73,6 +74,7 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
                 description: descriptionController.text,
                 type: typeValue,
                 image: imageUrl,
+                photo: image,
               )));
         },
         label: const Text('Sections'),
@@ -150,6 +152,7 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
                                                     ),
                                                     onPressed: () {
                                                       pickImage(ImageSource.gallery);
+
                                                       Navigator.pop(context);
                                                     },
                                                     child: Row(

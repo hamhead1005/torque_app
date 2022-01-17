@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'new_vehicle_profile.dart';
 import 'vehicle_view.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,14 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Expanded(
+            Expanded(
               flex: 20,
-                child: Image(
-                  image: NetworkImage('https://cdn-icons-png.flaticon.com/512/2418/2418968.png'),
+                child: CachedNetworkImage(
+                  imageUrl: 'https://cdn-icons-png.flaticon.com/512/2418/2418968.png',
                   width: 200,
                   height: 200,
-                ),),
-
+                ),
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.blueGrey,

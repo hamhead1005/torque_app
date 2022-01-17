@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'view_sections.dart';
 
@@ -13,6 +14,22 @@ class VehicleViewPage extends StatefulWidget {
 
 class _VehicleViewState extends State<VehicleViewPage> {
   var VehicleList = [];
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
+  Future<String> downloadURL(String imageName) async{
+    String downloadURl = await storage.ref('vehicle/Test').getDownloadURL();
+
+    return downloadURl;
+  }
+
+  Future<ListResult> listFiles() async{
+    ListResult result = await storage.ref('vehicle').listAll();
+
+    result.items.forEach((Reference ref) {
+      print('found file: $ref');
+    });
+    return result;
+  }
 
   _VehicleViewState() {
     //Get Vehicles from Database

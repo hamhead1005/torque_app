@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
@@ -9,6 +12,7 @@ class addSections extends StatefulWidget {
     required this.type,
     required this.description,
     required this.image,
+    required this.photo
   }) : super(key: key);
 
   final String title;
@@ -16,14 +20,27 @@ class addSections extends StatefulWidget {
   final String type;
   final String description;
   final String image;
+  final File? photo;
   @override
   _addSectionsState createState() => _addSectionsState();
 }
 
 class _addSectionsState extends State<addSections> {
+  File? image;
   List<String> sections = []; //local List sections
+  final FirebaseStorage storage = FirebaseStorage.instance;
 
   final sectionNameController = TextEditingController();
+
+  Future<void> uploadImage(String fileName) async{
+    //File file = File(filePath);
+    image = widget.photo;
+
+    print(image!.path.toString());
+    try {
+      await storage.ref('vehicle/$fileName').putFile(image!);
+    } on FirebaseException catch (e) {print(e);}
+  }
 
   @override
   void dispose() {
@@ -156,6 +173,7 @@ class _addSectionsState extends State<addSections> {
                   child: ElevatedButton(
                     onPressed: () {
                       //Create Vehicle
+
                       var timestamp = DateTime.now().millisecondsSinceEpoch;
                       FirebaseDatabase.instance.ref().child('vehicles/vehicle' + timestamp.toString()).set(
                           {
@@ -171,6 +189,7 @@ class _addSectionsState extends State<addSections> {
                         print("Failed to add");
                       });
 
+                      uploadImage(timestamp.toString());
                       print("New Vehicle Created");
 
                       //Create Sections for Vehicle
